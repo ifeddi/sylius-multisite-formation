@@ -1,0 +1,20 @@
+# Exemple : ouverture du site Belgique (module 14, voir docs/formation/ouverture-site.md)
+# Prérequis : locale fr_FR, devise EUR, zone EU (contient BE), taxon « category », payment methods et
+# shipping method « eu_standard » déjà présents (fixtures formation_multisite).
+# Les champs optionnels absents ne sont pas modifiés. Les montants sont en centimes.
+site:
+    code: SITE_BE
+    name: 'Site Belgique'
+    hostname: be.sylius.localhost
+    default_locale: fr_FR
+    locales: [fr_FR]
+    base_currency: EUR
+    currencies: [EUR]
+    default_tax_zone: EU
+    tax_calculation_strategy: order_items_based
+    menu_taxon: category
+    contact_email: belgique@example.com
+    enabled: true
+    payment_methods: [cash_on_delivery, bank_transfer]
+    shipping_methods:
+        - { code: eu_standard, amount: 890 }

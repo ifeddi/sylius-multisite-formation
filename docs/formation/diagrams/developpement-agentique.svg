@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000" font-family="Segoe UI, Arial, sans-serif">
+<defs><marker id="a-bleu" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#1F4E9C"/></marker><marker id="a-vert" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2E7D32"/></marker><marker id="a-orange" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#E65100"/></marker><marker id="a-violet" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#6A1B9A"/></marker><marker id="a-gris" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#455A64"/></marker><marker id="a-rouge" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#C62828"/></marker></defs>
+<rect width="1600" height="1000" fill="#FFFFFF"/>
+<text x="30" y="44" font-size="28" font-weight="700" fill="#17365D" text-anchor="start" >Développement agentique : boucle humain et agents</text>
+<text x="30" y="72" font-size="16" font-weight="400" fill="#546E7A" text-anchor="start" >Chaque étape produit un livrable vérifiable ; l'humain valide le plan et la fusion</text>
+<rect x="30" y="110" width="340" height="200" rx="12" fill="#E8F0FB" stroke="#1F4E9C" stroke-width="2"/>
+<text x="44" y="138" font-size="17" font-weight="700" fill="#1F4E9C" text-anchor="start" >1  Cadrer</text>
+<text x="44" y="164" font-size="15" font-weight="400" fill="#263238" text-anchor="start" >Besoin décrit par l'humain</text>
+<text x="44" y="185" font-size="15" font-weight="400" fill="#263238" text-anchor="start" >CLAUDE.md : version, commandes,</text>
+<text x="44" y="206" font-size="15" font-weight="400" fill="#263238" text-anchor="start" >règle d'extension, interdits</text>
+<text x="44" y="227" font-size="15" font-weight="400" fill="#263238" text-anchor="start" >Information manquante : on demande</text>
+<rect x="420" y="110" width="340" height="200" rx="12" fill="#F3E5F5" stroke="#6A1B9A" stroke-width="2"/>
+<text x="434" y="138" font-size="17" font-weight="700" fill="#6A1B9A" text-anchor="start" >2  Explorer</text>
+<text x="434" y="164" font-size="15" font-weight="400" fill="#263238" text-anchor="start" >Sous-agent « explorer »</text>
+<text x="434" y="185" font-size="15" font-weight="400" fill="#263238" text-anchor="start" >Lecture seule, rien n'est modifié</text>
+<text x="434" y="206" font-size="15" font-weight="400" fill="#263238" text-anchor="start" >Rapport : fichiers, hooks, risques</text>
+<text x="434" y="227" font-size="15" font-weight="400" fill="#263238" text-anchor="start" >Sources : projet et code de Sylius</text>
+<rect x="810" y="110" width="340" height="200" rx="12" fill="#F3E5F5" stroke="#6A1B9A" stroke-width="2"/>
+<text x="824" y="138" font-size="17" font-weight="700" fill="#6A1B9A" text-anchor="start" >3  Planifier</text>
+<text x="824" y="164" font-size="15" font-weight="400" fill="#263238" text-anchor="start" >Plan mode</text>
+<text x="824" y="185" font-size="15" font-weight="400" fill="#263238" text-anchor="start" >Fichiers à créer ou modifier</text>
+<text x="824" y="206" font-size="15" font-weight="400" fill="#263238" text-anchor="start" >Config, event, decorator,</text>
+<text x="824" y="227" font-size="15" font-weight="400" fill="#263238" text-anchor="start" >override en dernier recours</text>
+<rect x="1200" y="110" width="340" height="200" rx="12" fill="#E8F5E9" stroke="#2E7D32" stroke-width="2"/>
+<text x="1214" y="138" font-size="17" font-weight="700" fill="#2E7D32" text-anchor="start" >4  Implémenter</text>
+<text x="1214" y="164" font-size="15" font-weight="400" fill="#263238" text-anchor="start" >Petits incréments</text>
+<text x="1214" y="185" font-size="15" font-weight="400" fill="#263238" text-anchor="start" >Logique dans un service testé</text>
+<text x="1214" y="206" font-size="15" font-weight="400" fill="#263238" text-anchor="start" >Listeners minces</text>
+<text x="1214" y="227" font-size="15" font-weight="400" fill="#263238" text-anchor="start" >Tests verts avant de continuer</text>
+<rect x="1200" y="400" width="340" height="200" rx="12" fill="#FFF3E0" stroke="#E65100" stroke-width="2"/>
+<text x="1214" y="428" font-size="17" font-weight="700" fill="#E65100" text-anchor="start" >5  Contrôler</text>
+<text x="1214" y="454" font-size="15" font-weight="400" fill="#263238" text-anchor="start" >ECS · PHPStan niveau 9 · PHPUnit</text>
+<text x="1214" y="475" font-size="15" font-weight="400" fill="#263238" text-anchor="start" >composer validate · lint YAML</text>
+<text x="1214" y="496" font-size="15" font-weight="400" fill="#263238" text-anchor="start" >Essai réel sur copie de la base</text>
+<text x="1214" y="517" font-size="15" font-weight="400" fill="#263238" text-anchor="start" >(simulation, puis exécution)</text>
+<rect x="810" y="400" width="340" height="200" rx="12" fill="#F3E5F5" stroke="#6A1B9A" stroke-width="2"/>
+<text x="824" y="428" font-size="17" font-weight="700" fill="#6A1B9A" text-anchor="start" >6  Relire</text>
+<text x="824" y="454" font-size="15" font-weight="400" fill="#263238" text-anchor="start" >Sous-agent « reviewer »</text>
+<text x="824" y="475" font-size="15" font-weight="400" fill="#263238" text-anchor="start" >Relecture du diff complet</text>
+<text x="824" y="496" font-size="15" font-weight="400" fill="#263238" text-anchor="start" >Bloquant, important, suggestion</text>
+<text x="824" y="517" font-size="15" font-weight="400" fill="#263238" text-anchor="start" >Corrections puis contrôles relancés</text>
+<rect x="420" y="400" width="340" height="200" rx="12" fill="#E8F5E9" stroke="#2E7D32" stroke-width="2"/>
+<text x="434" y="428" font-size="17" font-weight="700" fill="#2E7D32" text-anchor="start" >7  Documenter et livrer</text>
+<text x="434" y="454" font-size="15" font-weight="400" fill="#263238" text-anchor="start" >README, changelog, tests documentés</text>
+<text x="434" y="475" font-size="15" font-weight="400" fill="#263238" text-anchor="start" >Commit au nom de l'auteur seul</text>
+<text x="434" y="496" font-size="15" font-weight="400" fill="#263238" text-anchor="start" >Branche, pull request, CI</text>
+<text x="434" y="517" font-size="15" font-weight="400" fill="#263238" text-anchor="start" >Relecture humaine</text>
+<rect x="30" y="400" width="340" height="200" rx="12" fill="#ECEFF1" stroke="#455A64" stroke-width="2"/>
+<text x="44" y="428" font-size="17" font-weight="700" fill="#455A64" text-anchor="start" >Fusion dans main</text>
+<text x="44" y="454" font-size="15" font-weight="400" fill="#263238" text-anchor="start" >3 contrôles requis + 1 approbation</text>
+<text x="44" y="475" font-size="15" font-weight="400" fill="#263238" text-anchor="start" >Fusion squash ou rebase</text>
+<text x="44" y="496" font-size="15" font-weight="400" fill="#263238" text-anchor="start" >Branche supprimée ensuite</text>
+<text x="44" y="517" font-size="15" font-weight="400" fill="#263238" text-anchor="start" >Déploiement : voir schéma CI/CD</text>
+<path d="M370,210 L420,210" fill="none" stroke="#455A64" stroke-width="2.5" marker-end="url(#a-gris)"/>
+<path d="M760,210 L810,210" fill="none" stroke="#455A64" stroke-width="2.5" marker-end="url(#a-gris)"/>
+<path d="M1150,210 L1200,210" fill="none" stroke="#455A64" stroke-width="2.5" marker-end="url(#a-gris)"/>
+<path d="M1370,310 L1370,400" fill="none" stroke="#455A64" stroke-width="2.5" marker-end="url(#a-gris)"/>
+<path d="M1200,500 L1150,500" fill="none" stroke="#455A64" stroke-width="2.5" marker-end="url(#a-gris)"/>
+<path d="M810,500 L760,500" fill="none" stroke="#455A64" stroke-width="2.5" marker-end="url(#a-gris)"/>
+<path d="M420,500 L370,500" fill="none" stroke="#455A64" stroke-width="2.5" marker-end="url(#a-gris)"/>
+<path d="M1540,500 L1575,500 L1575,210 L1540,210" fill="none" stroke="#C62828" stroke-width="2.5" stroke-dasharray="7 5" marker-end="url(#a-rouge)"/>
+<rect x="790" y="318" width="380" height="28" rx="14" fill="#E65100" stroke="#E65100" stroke-width="0"/>
+<text x="980.0" y="337" font-size="13" font-weight="700" fill="#FFFFFF" text-anchor="middle" >VALIDATION HUMAINE DU PLAN AVANT TOUT CODE</text>
+<rect x="60" y="618" width="280" height="28" rx="14" fill="#E65100" stroke="#E65100" stroke-width="0"/>
+<text x="200.0" y="637" font-size="13" font-weight="700" fill="#FFFFFF" text-anchor="middle" >VALIDATION HUMAINE DE LA FUSION</text>
+<text x="1000" y="640" font-size="14" font-weight="600" fill="#C62828" text-anchor="middle" >Flèche pointillée rouge : échec, bloquant ou remarque, retour à l'étape 4</text>
+<text x="30" y="690" font-size="20" font-weight="700" fill="#C62828" text-anchor="start" >Garde-fous</text>
+<rect x="30" y="705" width="290" height="110" rx="12" fill="#FDECEA" stroke="#C62828" stroke-width="2"/>
+<text x="44" y="734" font-size="16" font-weight="700" fill="#C62828" text-anchor="start" >CLAUDE.md</text>
+<text x="44" y="760" font-size="14" font-weight="400" fill="#263238" text-anchor="start" >Contexte et règles du projet, lus</text>
+<text x="44" y="780" font-size="14" font-weight="400" fill="#263238" text-anchor="start" >à chaque session</text>
+<rect x="342" y="705" width="290" height="110" rx="12" fill="#FDECEA" stroke="#C62828" stroke-width="2"/>
+<text x="356" y="734" font-size="16" font-weight="700" fill="#C62828" text-anchor="start" >Permissions</text>
+<text x="356" y="760" font-size="14" font-weight="400" fill="#263238" text-anchor="start" >Lecture des secrets refusée,</text>
+<text x="356" y="780" font-size="14" font-weight="400" fill="#263238" text-anchor="start" >droits limités par outil</text>
+<rect x="654" y="705" width="290" height="110" rx="12" fill="#FDECEA" stroke="#C62828" stroke-width="2"/>
+<text x="668" y="734" font-size="16" font-weight="700" fill="#C62828" text-anchor="start" >Vérifier, pas croire</text>
+<text x="668" y="760" font-size="14" font-weight="400" fill="#263238" text-anchor="start" >Sans source l'IA invente : code</text>
+<text x="668" y="780" font-size="14" font-weight="400" fill="#263238" text-anchor="start" >des dépendances et tests</text>
+<rect x="966" y="705" width="290" height="110" rx="12" fill="#FDECEA" stroke="#C62828" stroke-width="2"/>
+<text x="980" y="734" font-size="16" font-weight="700" fill="#C62828" text-anchor="start" >Simulation d'abord</text>
+<text x="980" y="760" font-size="14" font-weight="400" fill="#263238" text-anchor="start" >dry-run et sauvegarde avant toute</text>
+<text x="980" y="780" font-size="14" font-weight="400" fill="#263238" text-anchor="start" >écriture de données</text>
+<rect x="1278" y="705" width="290" height="110" rx="12" fill="#FDECEA" stroke="#C62828" stroke-width="2"/>
+<text x="1292" y="734" font-size="16" font-weight="700" fill="#C62828" text-anchor="start" >Interdits</text>
+<text x="1292" y="760" font-size="14" font-weight="400" fill="#263238" text-anchor="start" >Pas de fixtures hors dev, rien</text>
+<text x="1292" y="780" font-size="14" font-weight="400" fill="#263238" text-anchor="start" >dans vendor/ ni dans les</text>
+<text x="1292" y="800" font-size="14" font-weight="400" fill="#263238" text-anchor="start" >migrations</text>
+<rect x="30" y="845" width="760" height="125" rx="12" fill="#F3E5F5" stroke="#6A1B9A" stroke-width="2" stroke-dasharray="8 6"/>
+<text x="44" y="873" font-size="17" font-weight="700" fill="#6A1B9A" text-anchor="start" >Option à tester : spec-driven development</text>
+<text x="44" y="899" font-size="14" font-weight="400" fill="#263238" text-anchor="start" >Spec Kit : constitution, spec, plan, tasks, implement</text>
+<text x="44" y="920" font-size="14" font-weight="400" fill="#263238" text-anchor="start" >Alternatives : OpenSpec (léger), Kiro, BMAD (à vérifier)</text>
+<text x="44" y="941" font-size="14" font-weight="400" fill="#263238" text-anchor="start" >Aucun recul de production à ce jour</text>
+<rect x="820" y="845" width="750" height="125" rx="12" fill="#ECEFF1" stroke="#455A64" stroke-width="2"/>
+<text x="834" y="873" font-size="17" font-weight="700" fill="#455A64" text-anchor="start" >Répartition des rôles</text>
+<text x="834" y="899" font-size="14" font-weight="400" fill="#263238" text-anchor="start" >Humain : décide, valide le plan, relit, fusionne</text>
+<text x="834" y="920" font-size="14" font-weight="400" fill="#263238" text-anchor="start" >Agents : explorent, proposent, codent, testent, relisent</text>
+<text x="834" y="941" font-size="14" font-weight="400" fill="#263238" text-anchor="start" >Gain de temps : ressenti, non mesuré</text>
+</svg>

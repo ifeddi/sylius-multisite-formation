@@ -1,0 +1,61 @@
+# Formation M11 / M13 : pipeline de qualité du code de la formation.
+# Étapes : validité (composer, YAML, conteneur) -> qualité (ECS, PHPStan) -> tests (PHPUnit) -> sécurité (composer audit).
+# Pas de Behat ni de test avec base de données : aucun n'existe dans ce dépôt pour le code de la formation.
+name: Formation QA
+
+on:
+    pull_request: ~ # pas de paths-ignore : ce contrôle est requis par la protection de la branche main
+    schedule:
+        - cron: '0 3 * * *' # nightly
+    workflow_dispatch: ~
+
+concurrency:
+    group: formation-qa-${{ github.ref }}
+    cancel-in-progress: true
+
+permissions:
+    contents: read
+
+jobs:
+    quality:
+        name: Qualité, tests, sécurité
+        runs-on: ubuntu-latest
+        steps:
+            -   uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+            -   uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # 2.40.0
+                with:
+                    php-version: '8.3'
+                    extensions: intl, gd, exif, sodium, pdo_mysql
+                    tools: composer
+
+            -   name: Cache Composer
+                uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+                with:
+                    path: ~/.composer/cache
+                    key: composer-${{ hashFiles('composer.lock') }}
+
+            -   run: composer install --no-interaction --prefer-dist
+
+            -   name: Validation de composer.json
+                run: composer validate --strict
+
+            -   name: Lint YAML (configuration, traductions, exemples de sites)
+                run: vendor/bin/yaml-lint config/packages/formation_*.yaml config/routes/formation_admin.yaml config/serialization config/validator data/formation/sites translations
+
+            -   name: Conteneur et enregistrement des commandes
+                run: |
+                    php bin/console lint:container
+                    php bin/console list formation
+
+            -   name: ECS
+                run: vendor/bin/ecs check src tests
+
+            -   name: PHPStan
+                run: vendor/bin/phpstan analyse --no-progress
+
+            -   name: PHPUnit (tests de la formation)
+                run: vendor/bin/phpunit tests/Formation
+
+            -   name: Audit des dépendances
+                run: composer audit --abandoned=report

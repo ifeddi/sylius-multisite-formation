@@ -1,0 +1,21 @@
+# Formation M6 : contraintes de validation.
+# Les ressources du cœur sont validées dans le groupe « sylius » : sans lui, la contrainte
+# ne s'applique pas au formulaire d'administration.
+App\Entity\Product\Product:
+    properties:
+        origin:
+            - Length:
+                max: 100
+                maxMessage: 'app.product.origin.max_length'
+                groups: [sylius]
+
+App\Entity\Supplier\Supplier:
+    properties:
+        code:
+            - NotBlank: ~
+            - Length: { max: 64 }
+        name:
+            - NotBlank: ~
+            - Length: { max: 255 }
+        contactEmail:
+            - Email: ~

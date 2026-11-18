@@ -1,0 +1,29 @@
+{
+  "_comment": "Exemple pour la formation M12. À copier vous-même dans .claude/settings.json si vous le souhaitez : deny l'emporte toujours sur allow.",
+  "permissions": {
+    "deny": [
+      "Read(./.env.local)",
+      "Read(./.env.*.local)",
+      "Read(./config/jwt/*.pem)",
+      "Read(./config/encryption/*.key)",
+      "Edit(./vendor/**)"
+    ],
+    "ask": [
+      "Bash(composer remove *)",
+      "Bash(composer update *)",
+      "Bash(docker compose down *)"
+    ],
+    "allow": [
+      "Bash(composer install *)",
+      "Bash(composer validate *)",
+      "Bash(composer audit *)",
+      "Bash(vendor/bin/phpunit *)",
+      "Bash(vendor/bin/ecs *)",
+      "Bash(vendor/bin/phpstan *)",
+      "Bash(php bin/console debug:*)",
+      "Bash(php bin/console formation:*)",
+      "Bash(git status *)",
+      "Bash(git diff *)"
+    ]
+  }
+}

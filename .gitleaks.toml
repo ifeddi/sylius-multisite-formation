@@ -1,0 +1,18 @@
+title = "sylius-multisite-formation"
+
+[extend]
+useDefault = true
+
+# Valeurs de TEST fournies par Sylius-Standard (identiques à l'amont, jamais utilisées en production).
+# Tout autre secret détecté doit faire échouer la CI.
+[allowlist]
+description = "Clés et phrase de passe de test de Sylius-Standard"
+paths = [
+    '''\.env\.dev''', # APP_SECRET de développement de Sylius-Standard (identique à l'amont) ; la production lit ses secrets dans l'environnement
+    '''config/jwt/private-test\.pem''',
+    '''config/jwt/public-test\.pem''',
+    '''config/encryption/test\.key''',
+]
+regexes = [
+    '''JWT_PASSPHRASE=e7c5fca1060bdf6ad23c33e4c236081f''',
+]

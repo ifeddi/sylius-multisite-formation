@@ -1,0 +1,9 @@
+# Formation M4 / M6 : traductions de l'interface (domaine « messages »)
+app:
+    menu:
+        formation: Formation
+    ui:
+        supplier: Fournisseur
+        suppliers: Fournisseurs
+        contact_email: E-mail de contact
+        origin: Origine

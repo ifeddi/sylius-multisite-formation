@@ -1,0 +1,15 @@
+# Formation M4 : routes d'administration de la ressource Fournisseur.
+# Les templates CRUD génériques de Sylius (@SyliusAdmin\shared\crud) s'appuient sur les hooks
+# « sylius_admin.common.* » : aucune configuration de hook n'est nécessaire pour une ressource simple.
+app_admin_supplier:
+    resource: |
+        alias: app.supplier
+        section: admin
+        templates: "@SyliusAdmin\\shared\\crud"
+        except: ['show']
+        redirect: update
+        grid: app_admin_supplier
+        form:
+            type: App\Formation\Module04Admin\Form\Type\SupplierType
+    type: sylius.resource
+    prefix: /%sylius_admin.path_name%

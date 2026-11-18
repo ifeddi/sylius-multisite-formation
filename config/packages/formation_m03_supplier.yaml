@@ -1,0 +1,9 @@
+# Formation M3 : déclaration de la ressource personnalisée « app.supplier »
+# Alias = <application>.<ressource> : il sert aux événements (app.supplier.pre_create),
+# aux routes d'administration et aux traductions (app.ui.suppliers).
+sylius_resource:
+    resources:
+        app.supplier:
+            driver: doctrine/orm
+            classes:
+                model: App\Entity\Supplier\Supplier

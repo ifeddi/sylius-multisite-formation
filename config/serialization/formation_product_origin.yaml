@@ -1,0 +1,12 @@
+# Formation M8 : expose le champ « origin » dans l'API Shop et l'API Admin.
+# Les groupes de sérialisation viennent de @SyliusApiBundle (serialization/Product.xml).
+App\Entity\Product\Product:
+    attributes:
+        origin:
+            groups:
+                - 'sylius:shop:product:index'
+                - 'sylius:shop:product:show'
+                - 'sylius:admin:product:index'
+                - 'sylius:admin:product:show'
+                - 'sylius:admin:product:create'
+                - 'sylius:admin:product:update'

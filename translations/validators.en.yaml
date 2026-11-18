@@ -1,0 +1,4 @@
+app:
+    product:
+        origin:
+            max_length: "The origin must not exceed {{ limit }} characters."

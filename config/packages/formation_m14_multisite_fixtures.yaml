@@ -1,0 +1,712 @@
+# Formation M14 : instance multi-sites / multi-marchés pour le développement local, avec un jeu de données complet.
+#
+#   bin/console sylius:fixtures:load formation_multisite
+#
+# Sites (un channel par site, une seule base de code et une seule base de données) :
+#   http://localhost              -> HQ       Portail global (EUR / USD, en_US + fr_FR + de_DE)
+#   http://fr.sylius.localhost    -> SITE_FR  Marché France (EUR, fr_FR)
+#   http://de.sylius.localhost    -> SITE_DE  Marché Allemagne (EUR, de_DE)
+#   http://us.sylius.localhost    -> SITE_US  Marché États-Unis (USD, en_US)
+#
+# Jeu de données : 20 produits (6 catégories, 2 produits configurables avec variantes, attributs, images),
+# noms et descriptions traduits en fr / de / en, origine et fournisseurs, 10 clients (retail et B2B),
+# environ 30 commandes réparties sur les sites, 4 promotions de panier et 1 promotion de catalogue.
+# Le produit « Maple Syrup » n'est vendu qu'aux États-Unis, l'huile d'olive pas aux États-Unis.
+#
+# Les identifiants des comptes de test (administrateur, API, clients) sont définis ci-dessous.
+# Réservé au développement local : ne jamais charger de fixtures en production.
+sylius_fixtures:
+    suites:
+        formation_multisite:
+            listeners:
+                orm_purger: ~
+                images_purger: ~
+                logger: ~
+                catalog_promotion_processor_executor: ~
+
+            fixtures:
+                locale:
+                    options:
+                        locales: ['en_US', 'fr_FR', 'de_DE']
+
+                currency:
+                    options:
+                        currencies: ['EUR', 'USD']
+
+                geographical:
+                    options:
+                        countries: ['FR', 'DE', 'BE', 'US']
+                        zones:
+                            EU:
+                                name: 'Union européenne'
+                                countries: ['FR', 'DE', 'BE']
+                            US:
+                                name: 'États-Unis'
+                                countries: ['US']
+
+                menu_taxon:
+                    name: taxon
+                    options:
+                        custom:
+                            category:
+                                code: 'category'
+                                name: 'Category'
+                                translations:
+                                    en_US:
+                                        name: 'Category'
+                                    fr_FR:
+                                        name: 'Catégorie'
+                                    de_DE:
+                                        name: 'Kategorie'
+
+                channel:
+                    options:
+                        custom:
+                            hq:
+                                name: 'Portail global'
+                                code: 'HQ'
+                                hostname: 'localhost'
+                                default_locale: 'en_US'
+                                locales: ['en_US', 'fr_FR', 'de_DE']
+                                base_currency: 'EUR'
+                                currencies: ['EUR', 'USD']
+                                default_tax_zone: 'EU'
+                                enabled: true
+                                menu_taxon: 'category'
+                                contact_email: 'portail@example.com'
+                                shop_billing_data:
+                                    company: 'Portail global'
+                                    tax_id: 'EU0000001'
+                                    country_code: 'FR'
+                                    street: '1 rue du Portail'
+                                    city: 'Paris'
+                                    postcode: '75001'
+                            site_fr:
+                                name: 'Site France'
+                                code: 'SITE_FR'
+                                hostname: 'fr.sylius.localhost'
+                                default_locale: 'fr_FR'
+                                locales: ['fr_FR']
+                                base_currency: 'EUR'
+                                currencies: ['EUR']
+                                default_tax_zone: 'EU'
+                                enabled: true
+                                menu_taxon: 'category'
+                                contact_email: 'france@example.com'
+                                shop_billing_data:
+                                    company: 'Site France'
+                                    tax_id: 'FR0000002'
+                                    country_code: 'FR'
+                                    street: '2 avenue de France'
+                                    city: 'Lyon'
+                                    postcode: '69001'
+                            site_de:
+                                name: 'Site Deutschland'
+                                code: 'SITE_DE'
+                                hostname: 'de.sylius.localhost'
+                                default_locale: 'de_DE'
+                                locales: ['de_DE']
+                                base_currency: 'EUR'
+                                currencies: ['EUR']
+                                default_tax_zone: 'EU'
+                                enabled: true
+                                menu_taxon: 'category'
+                                contact_email: 'deutschland@example.com'
+                                shop_billing_data:
+                                    company: 'Site Deutschland'
+                                    tax_id: 'DE0000003'
+                                    country_code: 'DE'
+                                    street: '3 Hauptstrasse'
+                                    city: 'Berlin'
+                                    postcode: '10115'
+                            site_us:
+                                name: 'Site United States'
+                                code: 'SITE_US'
+                                hostname: 'us.sylius.localhost'
+                                default_locale: 'en_US'
+                                locales: ['en_US']
+                                base_currency: 'USD'
+                                currencies: ['USD']
+                                default_tax_zone: 'US'
+                                enabled: true
+                                menu_taxon: 'category'
+                                contact_email: 'usa@example.com'
+                                shop_billing_data:
+                                    company: 'Site United States'
+                                    tax_id: 'US0000004'
+                                    country_code: 'US'
+                                    street: '4 Main Street'
+                                    city: 'New York'
+                                    postcode: '10001'
+
+                payment_method:
+                    options:
+                        custom:
+                            cash_on_delivery:
+                                code: 'cash_on_delivery'
+                                name: 'Cash on delivery'
+                                enabled: true
+                                channels: ['HQ', 'SITE_FR', 'SITE_DE', 'SITE_US']
+                            bank_transfer:
+                                code: 'bank_transfer'
+                                name: 'Bank transfer'
+                                enabled: true
+                                channels: ['HQ', 'SITE_FR', 'SITE_DE', 'SITE_US']
+
+                shipping_method:
+                    options:
+                        custom:
+                            eu_standard:
+                                code: 'eu_standard'
+                                name: 'Livraison standard Europe'
+                                enabled: true
+                                zone: 'EU'
+                                channels: ['HQ', 'SITE_FR', 'SITE_DE']
+                                calculator:
+                                    type: 'flat_rate'
+                                    configuration:
+                                        HQ: { amount: 790 }
+                                        SITE_FR: { amount: 590 }
+                                        SITE_DE: { amount: 690 }
+                            us_standard:
+                                code: 'us_standard'
+                                name: 'Standard shipping US'
+                                enabled: true
+                                zone: 'US'
+                                channels: ['SITE_US']
+                                calculator:
+                                    type: 'flat_rate'
+                                    configuration:
+                                        SITE_US: { amount: 999 }
+
+                customer_group:
+                    options:
+                        custom:
+                            retail:
+                                code: 'retail'
+                                name: 'Retail'
+                            wholesale:
+                                code: 'wholesale'
+                                name: 'Wholesale (B2B)'
+
+                # Clients : 7 particuliers (retail) et 3 acheteurs professionnels (groupe wholesale).
+                shop_user:
+                    name: 'shop_user'
+                    options:
+                        custom:
+                            -   { email: 'shop@example.com', first_name: 'John', last_name: 'Doe', password: 'sylius', customer_group: 'retail' }
+                            -   { email: 'marie.dupont@example.com', first_name: 'Marie', last_name: 'Dupont', password: 'sylius', customer_group: 'retail' }
+                            -   { email: 'lucas.martin@example.com', first_name: 'Lucas', last_name: 'Martin', password: 'sylius', customer_group: 'retail' }
+                            -   { email: 'hans.mueller@example.com', first_name: 'Hans', last_name: 'Müller', password: 'sylius', customer_group: 'retail' }
+                            -   { email: 'anna.schmidt@example.com', first_name: 'Anna', last_name: 'Schmidt', password: 'sylius', customer_group: 'retail' }
+                            -   { email: 'john.smith@example.com', first_name: 'John', last_name: 'Smith', password: 'sylius', customer_group: 'retail' }
+                            -   { email: 'emily.johnson@example.com', first_name: 'Emily', last_name: 'Johnson', password: 'sylius', customer_group: 'retail' }
+                            -   { email: 'buyer@wholesale.example.com', first_name: 'Claire', last_name: 'Acheteur', password: 'sylius', customer_group: 'wholesale' }
+                            -   { email: 'bistro.gourmet@wholesale.example.com', first_name: 'Bistro', last_name: 'Gourmet', password: 'sylius', customer_group: 'wholesale' }
+                            -   { email: 'hotel.alpes@wholesale.example.com', first_name: 'Hôtel', last_name: 'des Alpes', password: 'sylius', customer_group: 'wholesale' }
+
+                admin_user:
+                    name: 'admin_user'
+                    options:
+                        custom:
+                            -   email: 'sylius@example.com'
+                                username: 'sylius'
+                                password: 'sylius'
+                                enabled: true
+                                locale_code: 'en_US'
+                                first_name: 'John'
+                                last_name: 'Doe'
+                            -   email: 'api@example.com'
+                                username: 'api'
+                                password: 'sylius-api'
+                                enabled: true
+                                locale_code: 'en_US'
+                                first_name: 'Luke'
+                                last_name: 'Brushwood'
+                                api: true
+
+                tax_category:
+                    options:
+                        custom:
+                            food:
+                                code: 'food'
+                                name: 'Food'
+
+                tax_rate:
+                    options:
+                        custom:
+                            eu_vat:
+                                code: 'eu_vat_20'
+                                name: 'VAT 20%'
+                                zone: 'EU'
+                                category: 'food'
+                                amount: 0.2
+                            us_sales_tax:
+                                code: 'us_sales_tax_7'
+                                name: 'Sales tax 7%'
+                                zone: 'US'
+                                category: 'food'
+                                amount: 0.07
+
+                # ------------------------------------------------------------------ Catalogue (M7)
+                catalog_taxon:
+                    name: taxon
+                    options:
+                        custom:
+                            catalog:
+                                code: 'catalog'
+                                name: 'Catalog'
+                                translations:
+                                    en_US: { name: 'Catalog' }
+                                    fr_FR: { name: 'Catalogue' }
+                                    de_DE: { name: 'Katalog' }
+                                children:
+                                    -   code: 'beverages'
+                                        translations:
+                                            en_US: { name: 'Beverages', slug: 'catalog/beverages' }
+                                            fr_FR: { name: 'Boissons', slug: 'catalogue/boissons' }
+                                            de_DE: { name: 'Getränke', slug: 'katalog/getraenke' }
+                                        children:
+                                            -   code: 'coffee'
+                                                translations:
+                                                    en_US: { name: 'Coffee', slug: 'catalog/beverages/coffee' }
+                                                    fr_FR: { name: 'Café', slug: 'catalogue/boissons/cafe' }
+                                                    de_DE: { name: 'Kaffee', slug: 'katalog/getraenke/kaffee' }
+                                            -   code: 'tea'
+                                                translations:
+                                                    en_US: { name: 'Tea', slug: 'catalog/beverages/tea' }
+                                                    fr_FR: { name: 'Thé', slug: 'catalogue/boissons/the' }
+                                                    de_DE: { name: 'Tee', slug: 'katalog/getraenke/tee' }
+                                            -   code: 'water'
+                                                translations:
+                                                    en_US: { name: 'Water', slug: 'catalog/beverages/water' }
+                                                    fr_FR: { name: 'Eau', slug: 'catalogue/boissons/eau' }
+                                                    de_DE: { name: 'Wasser', slug: 'katalog/getraenke/wasser' }
+                                    -   code: 'pantry'
+                                        translations:
+                                            en_US: { name: 'Pantry', slug: 'catalog/pantry' }
+                                            fr_FR: { name: 'Épicerie', slug: 'catalogue/epicerie' }
+                                            de_DE: { name: 'Vorratskammer', slug: 'katalog/vorratskammer' }
+                                        children:
+                                            -   code: 'oils'
+                                                translations:
+                                                    en_US: { name: 'Oils', slug: 'catalog/pantry/oils' }
+                                                    fr_FR: { name: 'Huiles', slug: 'catalogue/epicerie/huiles' }
+                                                    de_DE: { name: 'Öle', slug: 'katalog/vorratskammer/oele' }
+                                            -   code: 'spices'
+                                                translations:
+                                                    en_US: { name: 'Spices and sauces', slug: 'catalog/pantry/spices' }
+                                                    fr_FR: { name: 'Épices et sauces', slug: 'catalogue/epicerie/epices' }
+                                                    de_DE: { name: 'Gewürze und Saucen', slug: 'katalog/vorratskammer/gewuerze' }
+                                            -   code: 'sweets'
+                                                translations:
+                                                    en_US: { name: 'Sweet spreads', slug: 'catalog/pantry/sweets' }
+                                                    fr_FR: { name: 'Produits sucrés', slug: 'catalogue/epicerie/sucres' }
+                                                    de_DE: { name: 'Süßes', slug: 'katalog/vorratskammer/suesses' }
+
+                catalog_attributes:
+                    name: product_attribute
+                    options:
+                        custom:
+                            -   name: 'Brand'
+                                code: 'brand'
+                                type: 'text'
+                                translations:
+                                    en_US: { name: 'Brand' }
+                                    fr_FR: { name: 'Marque' }
+                                    de_DE: { name: 'Marke' }
+                            -   name: 'Organic'
+                                code: 'organic'
+                                type: 'checkbox'
+                                translatable: false
+                                translations:
+                                    en_US: { name: 'Organic' }
+                                    fr_FR: { name: 'Bio' }
+                                    de_DE: { name: 'Bio' }
+                            -   name: 'Shelf life (days)'
+                                code: 'shelf_life_days'
+                                type: 'integer'
+                                translatable: false
+                                translations:
+                                    en_US: { name: 'Shelf life (days)' }
+                                    fr_FR: { name: 'Durée de conservation (jours)' }
+                                    de_DE: { name: 'Haltbarkeit (Tage)' }
+
+                catalog_options:
+                    name: product_option
+                    options:
+                        custom:
+                            -   name: 'Pack size'
+                                code: 'pack_size'
+                                values:
+                                    pack_250g: '250 g'
+                                    pack_500g: '500 g'
+                                    pack_1kg: '1 kg'
+                                translations:
+                                    en_US: { name: 'Pack size' }
+                                    fr_FR: { name: 'Conditionnement' }
+                                    de_DE: { name: 'Packungsgröße' }
+
+                catalog_products:
+                    name: product
+                    options:
+                        custom:
+                            -   name: 'ESPRESSO_BEANS'
+                                code: 'ESPRESSO_BEANS'
+                                tax_category: 'food'
+                                channels: ['HQ', 'SITE_FR', 'SITE_DE', 'SITE_US']
+                                main_taxon: 'coffee'
+                                taxons: ['coffee']
+                                product_attributes: { brand: 'Maison Aurore', organic: true, shelf_life_days: 365 }
+                                product_options: ['pack_size']
+                                images: [{ path: '%kernel.project_dir%/data/formation/images/espresso_beans.png', type: 'main' }]
+                            -   name: 'FILTER_COFFEE'
+                                code: 'FILTER_COFFEE'
+                                tax_category: 'food'
+                                channels: ['HQ', 'SITE_FR', 'SITE_DE', 'SITE_US']
+                                main_taxon: 'coffee'
+                                taxons: ['coffee']
+                                product_attributes: { brand: 'Maison Aurore', organic: false, shelf_life_days: 270 }
+                                product_options: ['pack_size']
+                                images: [{ path: '%kernel.project_dir%/data/formation/images/filter_coffee.png', type: 'main' }]
+                            -   name: 'DECAF_PODS'
+                                code: 'DECAF_PODS'
+                                tax_category: 'food'
+                                channels: ['HQ', 'SITE_FR', 'SITE_DE', 'SITE_US']
+                                main_taxon: 'coffee'
+                                taxons: ['coffee']
+                                product_attributes: { brand: 'Maison Aurore', organic: false, shelf_life_days: 365 }
+                                images: [{ path: '%kernel.project_dir%/data/formation/images/decaf_pods.png', type: 'main' }]
+                            -   name: 'GREEN_TEA'
+                                code: 'GREEN_TEA'
+                                tax_category: 'food'
+                                channels: ['HQ', 'SITE_FR', 'SITE_DE', 'SITE_US']
+                                main_taxon: 'tea'
+                                taxons: ['tea']
+                                product_attributes: { brand: 'Jardins de Thé', organic: true, shelf_life_days: 540 }
+                                images: [{ path: '%kernel.project_dir%/data/formation/images/green_tea.png', type: 'main' }]
+                            -   name: 'BLACK_TEA'
+                                code: 'BLACK_TEA'
+                                tax_category: 'food'
+                                channels: ['HQ', 'SITE_FR', 'SITE_DE', 'SITE_US']
+                                main_taxon: 'tea'
+                                taxons: ['tea']
+                                product_attributes: { brand: 'Jardins de Thé', organic: false, shelf_life_days: 720 }
+                                images: [{ path: '%kernel.project_dir%/data/formation/images/black_tea.png', type: 'main' }]
+                            -   name: 'HERBAL_TEA'
+                                code: 'HERBAL_TEA'
+                                tax_category: 'food'
+                                channels: ['HQ', 'SITE_FR', 'SITE_DE']
+                                main_taxon: 'tea'
+                                taxons: ['tea']
+                                product_attributes: { brand: 'Jardins de Thé', organic: true, shelf_life_days: 450 }
+                                images: [{ path: '%kernel.project_dir%/data/formation/images/herbal_tea.png', type: 'main' }]
+                            -   name: 'SPARKLING_WATER'
+                                code: 'SPARKLING_WATER'
+                                tax_category: 'food'
+                                channels: ['HQ', 'SITE_FR', 'SITE_DE', 'SITE_US']
+                                main_taxon: 'water'
+                                taxons: ['water']
+                                product_attributes: { brand: 'Source Claire', organic: false, shelf_life_days: 540 }
+                                images: [{ path: '%kernel.project_dir%/data/formation/images/sparkling_water.png', type: 'main' }]
+                            -   name: 'STILL_WATER'
+                                code: 'STILL_WATER'
+                                tax_category: 'food'
+                                channels: ['HQ', 'SITE_FR', 'SITE_DE', 'SITE_US']
+                                main_taxon: 'water'
+                                taxons: ['water']
+                                product_attributes: { brand: 'Source Claire', organic: false, shelf_life_days: 540 }
+                                images: [{ path: '%kernel.project_dir%/data/formation/images/still_water.png', type: 'main' }]
+                            -   name: 'OLIVE_OIL'
+                                code: 'OLIVE_OIL'
+                                tax_category: 'food'
+                                channels: ['HQ', 'SITE_FR', 'SITE_DE']
+                                main_taxon: 'oils'
+                                taxons: ['oils']
+                                product_attributes: { brand: 'Olio Italia', organic: true, shelf_life_days: 540 }
+                                images: [{ path: '%kernel.project_dir%/data/formation/images/olive_oil.png', type: 'main' }]
+                            -   name: 'SUNFLOWER_OIL'
+                                code: 'SUNFLOWER_OIL'
+                                tax_category: 'food'
+                                channels: ['HQ', 'SITE_FR', 'SITE_DE', 'SITE_US']
+                                main_taxon: 'oils'
+                                taxons: ['oils']
+                                product_attributes: { brand: 'Prairie Foods', organic: false, shelf_life_days: 360 }
+                                images: [{ path: '%kernel.project_dir%/data/formation/images/sunflower_oil.png', type: 'main' }]
+                            -   name: 'RAPESEED_OIL'
+                                code: 'RAPESEED_OIL'
+                                tax_category: 'food'
+                                channels: ['HQ', 'SITE_FR', 'SITE_DE']
+                                main_taxon: 'oils'
+                                taxons: ['oils']
+                                product_attributes: { brand: 'Nord Gewürze', organic: true, shelf_life_days: 300 }
+                                images: [{ path: '%kernel.project_dir%/data/formation/images/rapeseed_oil.png', type: 'main' }]
+                            -   name: 'SEA_SALT'
+                                code: 'SEA_SALT'
+                                tax_category: 'food'
+                                channels: ['HQ', 'SITE_FR', 'SITE_DE', 'SITE_US']
+                                main_taxon: 'spices'
+                                taxons: ['spices']
+                                product_attributes: { brand: 'Nord Gewürze', organic: false, shelf_life_days: 1800 }
+                                images: [{ path: '%kernel.project_dir%/data/formation/images/sea_salt.png', type: 'main' }]
+                            -   name: 'BLACK_PEPPER'
+                                code: 'BLACK_PEPPER'
+                                tax_category: 'food'
+                                channels: ['HQ', 'SITE_FR', 'SITE_DE', 'SITE_US']
+                                main_taxon: 'spices'
+                                taxons: ['spices']
+                                product_attributes: { brand: 'Nord Gewürze', organic: true, shelf_life_days: 1080 }
+                                images: [{ path: '%kernel.project_dir%/data/formation/images/black_pepper.png', type: 'main' }]
+                            -   name: 'SMOKED_PAPRIKA'
+                                code: 'SMOKED_PAPRIKA'
+                                tax_category: 'food'
+                                channels: ['HQ', 'SITE_FR', 'SITE_DE', 'SITE_US']
+                                main_taxon: 'spices'
+                                taxons: ['spices']
+                                product_attributes: { brand: 'Nord Gewürze', organic: false, shelf_life_days: 720 }
+                                images: [{ path: '%kernel.project_dir%/data/formation/images/smoked_paprika.png', type: 'main' }]
+                            -   name: 'MAPLE_SYRUP'
+                                code: 'MAPLE_SYRUP'
+                                tax_category: 'food'
+                                channels: ['HQ', 'SITE_US']
+                                main_taxon: 'sweets'
+                                taxons: ['sweets']
+                                product_attributes: { brand: 'Prairie Foods', organic: true, shelf_life_days: 730 }
+                                images: [{ path: '%kernel.project_dir%/data/formation/images/maple_syrup.png', type: 'main' }]
+                            -   name: 'WILDFLOWER_HONEY'
+                                code: 'WILDFLOWER_HONEY'
+                                tax_category: 'food'
+                                channels: ['HQ', 'SITE_FR', 'SITE_DE', 'SITE_US']
+                                main_taxon: 'sweets'
+                                taxons: ['sweets']
+                                product_attributes: { brand: 'Maison Aurore', organic: true, shelf_life_days: 1095 }
+                                images: [{ path: '%kernel.project_dir%/data/formation/images/wildflower_honey.png', type: 'main' }]
+                            -   name: 'DARK_CHOCOLATE'
+                                code: 'DARK_CHOCOLATE'
+                                tax_category: 'food'
+                                channels: ['HQ', 'SITE_FR', 'SITE_DE', 'SITE_US']
+                                main_taxon: 'sweets'
+                                taxons: ['sweets']
+                                product_attributes: { brand: 'Chocolaterie du Nord', organic: false, shelf_life_days: 365 }
+                                images: [{ path: '%kernel.project_dir%/data/formation/images/dark_chocolate.png', type: 'main' }]
+                            -   name: 'HAZELNUT_SPREAD'
+                                code: 'HAZELNUT_SPREAD'
+                                tax_category: 'food'
+                                channels: ['HQ', 'SITE_FR', 'SITE_DE']
+                                main_taxon: 'sweets'
+                                taxons: ['sweets']
+                                product_attributes: { brand: 'Olio Italia', organic: false, shelf_life_days: 300 }
+                                images: [{ path: '%kernel.project_dir%/data/formation/images/hazelnut_spread.png', type: 'main' }]
+                            -   name: 'PEANUT_BUTTER'
+                                code: 'PEANUT_BUTTER'
+                                tax_category: 'food'
+                                channels: ['HQ', 'SITE_US']
+                                main_taxon: 'sweets'
+                                taxons: ['sweets']
+                                product_attributes: { brand: 'Prairie Foods', organic: false, shelf_life_days: 270 }
+                                images: [{ path: '%kernel.project_dir%/data/formation/images/peanut_butter.png', type: 'main' }]
+                            -   name: 'HOT_SAUCE'
+                                code: 'HOT_SAUCE'
+                                tax_category: 'food'
+                                channels: ['HQ', 'SITE_US']
+                                main_taxon: 'spices'
+                                taxons: ['spices']
+                                product_attributes: { brand: 'Prairie Foods', organic: false, shelf_life_days: 540 }
+                                images: [{ path: '%kernel.project_dir%/data/formation/images/hot_sauce.png', type: 'main' }]
+
+                # Fixtures personnalisées du projet (src/Formation/Module07Catalog/Fixture) : origine et
+                # traductions des produits (modules 2, 6, 14) puis fournisseurs (modules 3 et 4).
+                catalog_enrichment:
+                    name: product_enrichment
+                    options:
+                        products:
+                            ESPRESSO_BEANS:   { origin: 'Italie',      names: { en_US: 'Espresso Beans', fr_FR: 'Café en grains espresso', de_DE: 'Espresso-Bohnen' } }
+                            FILTER_COFFEE:    { origin: 'Colombie',    names: { en_US: 'Ground Filter Coffee', fr_FR: 'Café moulu pour filtre', de_DE: 'Gemahlener Filterkaffee' } }
+                            DECAF_PODS:       { origin: 'Brésil',      names: { en_US: 'Decaf Coffee Pods', fr_FR: 'Capsules de café décaféiné', de_DE: 'Entkoffeinierte Kaffeekapseln' } }
+                            GREEN_TEA:        { origin: 'Japon',       names: { en_US: 'Green Tea Sencha 200g', fr_FR: 'Thé vert Sencha 200 g', de_DE: 'Grüner Tee Sencha 200 g' } }
+                            BLACK_TEA:        { origin: 'Sri Lanka',   names: { en_US: 'Black Tea Earl Grey 200g', fr_FR: 'Thé noir Earl Grey 200 g', de_DE: 'Schwarzer Tee Earl Grey 200 g' } }
+                            HERBAL_TEA:       { origin: 'France',      names: { en_US: 'Herbal Infusion Verbena', fr_FR: 'Infusion verveine', de_DE: 'Kräutertee Eisenkraut' } }
+                            SPARKLING_WATER:  { origin: 'France',      names: { en_US: 'Sparkling Water 6x1L', fr_FR: 'Eau gazeuse 6x1 L', de_DE: 'Mineralwasser mit Kohlensäure 6x1 L' } }
+                            STILL_WATER:      { origin: 'Allemagne',   names: { en_US: 'Still Water 6x1.5L', fr_FR: 'Eau plate 6x1,5 L', de_DE: 'Stilles Wasser 6x1,5 L' } }
+                            OLIVE_OIL:        { origin: 'Italie',      names: { en_US: 'Extra Virgin Olive Oil 750ml', fr_FR: "Huile d'olive vierge extra 750 ml", de_DE: 'Natives Olivenöl extra 750 ml' } }
+                            SUNFLOWER_OIL:    { origin: 'France',      names: { en_US: 'Sunflower Oil 1L', fr_FR: 'Huile de tournesol 1 L', de_DE: 'Sonnenblumenöl 1 L' } }
+                            RAPESEED_OIL:     { origin: 'Allemagne',   names: { en_US: 'Cold-pressed Rapeseed Oil 500ml', fr_FR: 'Huile de colza pressée à froid 500 ml', de_DE: 'Kaltgepresstes Rapsöl 500 ml' } }
+                            SEA_SALT:         { origin: 'France',      names: { en_US: 'Sea Salt Flakes 250g', fr_FR: 'Fleur de sel 250 g', de_DE: 'Meersalzflocken 250 g' } }
+                            BLACK_PEPPER:     { origin: 'Inde',        names: { en_US: 'Black Peppercorns 100g', fr_FR: 'Poivre noir en grains 100 g', de_DE: 'Schwarze Pfefferkörner 100 g' } }
+                            SMOKED_PAPRIKA:   { origin: 'Espagne',     names: { en_US: 'Smoked Paprika 80g', fr_FR: 'Paprika fumé 80 g', de_DE: 'Geräuchertes Paprikapulver 80 g' } }
+                            MAPLE_SYRUP:      { origin: 'Canada',      names: { en_US: 'Maple Syrup 500ml', fr_FR: "Sirop d'érable 500 ml", de_DE: 'Ahornsirup 500 ml' } }
+                            WILDFLOWER_HONEY: { origin: 'France',      names: { en_US: 'Wildflower Honey 500g', fr_FR: 'Miel de fleurs sauvages 500 g', de_DE: 'Wildblütenhonig 500 g' } }
+                            DARK_CHOCOLATE:   { origin: 'Belgique',    names: { en_US: 'Dark Chocolate 70% 100g', fr_FR: 'Chocolat noir 70 % 100 g', de_DE: 'Zartbitterschokolade 70 % 100 g' } }
+                            HAZELNUT_SPREAD:  { origin: 'Italie',      names: { en_US: 'Hazelnut Spread 400g', fr_FR: 'Pâte à tartiner noisette 400 g', de_DE: 'Haselnussaufstrich 400 g' } }
+                            PEANUT_BUTTER:    { origin: 'États-Unis',  names: { en_US: 'Peanut Butter 340g', fr_FR: 'Beurre de cacahuète 340 g', de_DE: 'Erdnussbutter 340 g' } }
+                            HOT_SAUCE:        { origin: 'États-Unis',  names: { en_US: 'Hot Sauce 150ml', fr_FR: 'Sauce piquante 150 ml', de_DE: 'Scharfe Sauce 150 ml' } }
+
+                catalog_suppliers:
+                    name: supplier
+                    options:
+                        custom:
+                            -   { code: 'maison_aurore', name: 'Maison Aurore (torréfacteur)', contact_email: 'achats@maison-aurore.example.com' }
+                            -   { code: 'jardins_de_the', name: 'Jardins de Thé', contact_email: 'contact@jardins-de-the.example.com' }
+                            -   { code: 'olio_italia', name: 'Olio Italia', contact_email: 'ordini@olio-italia.example.com' }
+                            -   { code: 'nord_gewuerze', name: 'Nord Gewürze GmbH', contact_email: 'einkauf@nord-gewuerze.example.com' }
+                            -   { code: 'prairie_foods', name: 'Prairie Foods Inc.', contact_email: 'sales@prairie-foods.example.com' }
+                            -   { code: 'source_claire', name: 'Source Claire', contact_email: 'commandes@source-claire.example.com', enabled: false }
+
+                # ------------------------------------------------------------------ Promotions (M7)
+                promotion:
+                    options:
+                        custom:
+                            welcome:
+                                code: 'welcome'
+                                name: 'Bienvenue : 10 % avec le code WELCOME10'
+                                channels: ['HQ', 'SITE_FR', 'SITE_DE', 'SITE_US']
+                                coupon_based: true
+                                coupons:
+                                    -   { code: 'WELCOME10', usage_limit: 100, per_customer_usage_limit: 1 }
+                                actions:
+                                    -   type: 'order_percentage_discount'
+                                        configuration:
+                                            percentage: 10
+                            spring_france:
+                                code: 'spring_france'
+                                name: 'Soldes de printemps France : -10 % dès 50 EUR'
+                                priority: 2
+                                starts_at: '-1 day'
+                                ends_at: '+60 days'
+                                channels: ['SITE_FR']
+                                rules:
+                                    -   type: 'item_total'
+                                        configuration:
+                                            SITE_FR:
+                                                amount: 50.00
+                                actions:
+                                    -   type: 'order_percentage_discount'
+                                        configuration:
+                                            percentage: 10
+                            free_shipping_us:
+                                code: 'free_shipping_us'
+                                name: 'Free shipping over 75 USD'
+                                priority: 3
+                                channels: ['SITE_US']
+                                rules:
+                                    -   type: 'item_total'
+                                        configuration:
+                                            SITE_US:
+                                                amount: 75.00
+                                actions:
+                                    -   type: 'shipping_percentage_discount'
+                                        configuration:
+                                            percentage: 100
+                            wholesale_discount:
+                                code: 'wholesale_discount'
+                                name: 'B2B : -15 % pour le groupe Wholesale'
+                                priority: 1
+                                channels: ['HQ', 'SITE_FR', 'SITE_DE', 'SITE_US']
+                                rules:
+                                    -   type: 'customer_group'
+                                        configuration:
+                                            group_code: 'wholesale'
+                                actions:
+                                    -   type: 'order_percentage_discount'
+                                        configuration:
+                                            percentage: 15
+
+                catalog_promotion:
+                    options:
+                        custom:
+                            coffee_days:
+                                code: 'coffee_days'
+                                name: 'Journées du café : -15 %'
+                                label: 'Journées du café'
+                                channels: ['HQ', 'SITE_FR', 'SITE_DE', 'SITE_US']
+                                priority: 1
+                                scopes:
+                                    -   type: 'for_taxons'
+                                        configuration:
+                                            taxons: ['coffee']
+                                actions:
+                                    -   type: 'percentage_discount'
+                                        configuration:
+                                            amount: 0.15
+
+                # ------------------------------------------------------------------ Commandes (M9, M10)
+                # Commandes de démonstration réparties par site ; « fulfilled » = commande terminée.
+                # La fixture entity_manager_clear (src/Formation/Module07Catalog/Fixture) vide l'EntityManager entre
+                # les lots : voir sa documentation (traductions incomplètes sur un projet multi-langues).
+                orders_france_done:
+                    name: order
+                    options: { amount: 5, channel: 'SITE_FR', customer: 'marie.dupont@example.com', country: 'FR', fulfilled: true }
+                clear_orders_1:
+                    name: entity_manager_clear
+                orders_france_open:
+                    name: order
+                    options: { amount: 3, channel: 'SITE_FR', customer: 'lucas.martin@example.com', country: 'FR', fulfilled: false }
+                clear_orders_2:
+                    name: entity_manager_clear
+                orders_germany_done:
+                    name: order
+                    options: { amount: 5, channel: 'SITE_DE', customer: 'hans.mueller@example.com', country: 'DE', fulfilled: true }
+                clear_orders_3:
+                    name: entity_manager_clear
+                orders_germany_open:
+                    name: order
+                    options: { amount: 2, channel: 'SITE_DE', customer: 'anna.schmidt@example.com', country: 'DE', fulfilled: false }
+                clear_orders_4:
+                    name: entity_manager_clear
+                orders_us_done:
+                    name: order
+                    options: { amount: 4, channel: 'SITE_US', customer: 'john.smith@example.com', country: 'US', fulfilled: true }
+                clear_orders_5:
+                    name: entity_manager_clear
+                orders_us_open:
+                    name: order
+                    options: { amount: 3, channel: 'SITE_US', customer: 'emily.johnson@example.com', country: 'US', fulfilled: false }
+                clear_orders_6:
+                    name: entity_manager_clear
+                # Portail global (3 langues) : une commande par lot, car la langue de chaque commande est tirée au hasard
+                # et un même lot ne doit pas mélanger plusieurs langues (voir ClearEntityManagerFixture).
+                orders_b2b_fr_1:
+                    name: order
+                    options: { amount: 1, channel: 'HQ', customer: 'buyer@wholesale.example.com', country: 'FR', fulfilled: true }
+                clear_orders_b2b_1:
+                    name: entity_manager_clear
+                orders_b2b_fr_2:
+                    name: order
+                    options: { amount: 1, channel: 'HQ', customer: 'buyer@wholesale.example.com', country: 'FR', fulfilled: true }
+                clear_orders_b2b_2:
+                    name: entity_manager_clear
+                orders_b2b_fr_3:
+                    name: order
+                    options: { amount: 1, channel: 'HQ', customer: 'buyer@wholesale.example.com', country: 'FR', fulfilled: true }
+                clear_orders_b2b_3:
+                    name: entity_manager_clear
+                orders_b2b_fr_4:
+                    name: order
+                    options: { amount: 1, channel: 'HQ', customer: 'buyer@wholesale.example.com', country: 'FR', fulfilled: true }
+                clear_orders_b2b_4:
+                    name: entity_manager_clear
+                orders_b2b_de_1:
+                    name: order
+                    options: { amount: 1, channel: 'HQ', customer: 'hotel.alpes@wholesale.example.com', country: 'DE', fulfilled: true }
+                clear_orders_b2b_5:
+                    name: entity_manager_clear
+                orders_b2b_de_2:
+                    name: order
+                    options: { amount: 1, channel: 'HQ', customer: 'hotel.alpes@wholesale.example.com', country: 'DE', fulfilled: true }
+                clear_orders_b2b_6:
+                    name: entity_manager_clear
+                orders_b2b_de_3:
+                    name: order
+                    options: { amount: 1, channel: 'HQ', customer: 'hotel.alpes@wholesale.example.com', country: 'DE', fulfilled: true }
+                clear_orders_b2b_7:
+                    name: entity_manager_clear
+                orders_b2b_open_1:
+                    name: order
+                    options: { amount: 1, channel: 'HQ', customer: 'bistro.gourmet@wholesale.example.com', country: 'FR', fulfilled: false }
+                clear_orders_b2b_8:
+                    name: entity_manager_clear
+                orders_b2b_open_2:
+                    name: order
+                    options: { amount: 1, channel: 'HQ', customer: 'bistro.gourmet@wholesale.example.com', country: 'FR', fulfilled: false }
+                clear_orders_b2b_9:
+                    name: entity_manager_clear

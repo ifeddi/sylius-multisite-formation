@@ -1,0 +1,9 @@
+# Formation M4 / M6: UI translations ("messages" domain)
+app:
+    menu:
+        formation: Training
+    ui:
+        supplier: Supplier
+        suppliers: Suppliers
+        contact_email: Contact e-mail
+        origin: Origin
