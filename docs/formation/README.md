@@ -3,7 +3,7 @@
 Projet `sylius-standard` 2.3.1 avec une instance **multi-sites / multi-marchés** (un channel par site)
 et un module de code par cours de la formation (cours, exercice et correction du [support PowerPoint](Formation_Sylius_3_jours.pptx)).
 
-Autres documents : [données et hotfix](donnees-et-hotfix.md) · [principes SOLID](solid.md) · [ouverture d'un site](ouverture-site.md) · [architecture Docker (DAT)](architecture-docker.md).
+Autres documents : [données et hotfix](donnees-et-hotfix.md) · [principes SOLID](solid.md) · [ouverture d'un site](ouverture-site.md) · [architecture Docker (DAT)](architecture-docker.md) · [process agentique](process-agentique.md).
 
 ![Architecture du projet : Docker, Sylius, code de formation, données et livraison](diagrams/architecture-projet.png)
 
@@ -168,7 +168,7 @@ Les commandes `php bin/console` de ce tableau se lancent dans le conteneur (voir
 | M9 | Rollout | `scripts/formation/deploy.sh`, `scripts/formation/init-local.sh`, `scripts/formation/db-dump.sh`, `scripts/formation/db-restore.sh` |
 | M10 | Maintenance, montées de version et correctifs de données | `scripts/formation/upgrade-check.sh`, `docs/formation/donnees-et-hotfix.md`, commande modèle `formation:products:set-origin --dry-run` |
 | M11 | Démarrage de projet, CI | `.github/workflows/formation-qa.yaml`, `CLAUDE.md`, `scripts/formation/qa.sh` |
-| M12 | Développer avec l'IA | `CLAUDE.md`, `docs/formation/m12-claude-settings.example.json` |
+| M12 | Développer avec l'IA | `CLAUDE.md`, `.claude/agents/`, `.claude/settings.json`, `docs/formation/process-agentique.md`, `docs/formation/m12-claude-settings.example.json` (exemple pédagogique, plus court que les réglages réels) |
 | M13 | Poste et pipeline | `scripts/formation/qa.sh`, `.github/workflows/formation-qa.yaml`, `compose.override.yml` (volumes) |
 | M14 | Plateforme multi-sites | `config/packages/formation_m14_multisite_fixtures.yaml`, `src/Formation/Module14MultiSite/`, `docs/formation/ouverture-site.md` (commande `formation:sites:open`) |
 | M16 | Principes SOLID dans Sylius | `docs/formation/solid.md` (erreur et correction par principe, écarts de Sylius, check-list de revue) ; exemples réels dans `src/Formation/` et `tests/Formation/` |

@@ -1,1 +1,24 @@
-* @Sylius/key-contributors @Sylius/development-team
+# Fichiers sensibles : toute pull request qui les touche demande la revue du propriétaire.
+# La configuration des agents IA, les workflows, les scripts, le Makefile et les fichiers d'outillage s'exécutent
+# avec les droits de quiconque clone le dépôt : ils ne doivent pas changer sans revue.
+# GitHub n'exige cette revue que si le ruleset de la branche active « Require review from Code Owners ».
+/.claude/                              @ifeddi
+/.mcp.json                             @ifeddi
+/.vscode/                              @ifeddi
+/CLAUDE.md                             @ifeddi
+/.github/                              @ifeddi
+/scripts/                              @ifeddi
+/Makefile                              @ifeddi
+/composer.json                         @ifeddi
+/compose.yml                           @ifeddi
+/compose.override.dist.yml             @ifeddi
+/phpunit.xml.dist                      @ifeddi
+/phpstan.dist.neon                     @ifeddi
+/ecs.php                               @ifeddi
+/.gitignore                            @ifeddi
+/.gitattributes                        @ifeddi
+/.gitleaks.toml                        @ifeddi
+/SECURITY.md                           @ifeddi
+/tests/Formation/Agents/               @ifeddi
+/tests/Formation/Scripts/              @ifeddi
+/docs/formation/process-agentique.md   @ifeddi
