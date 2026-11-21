@@ -51,6 +51,9 @@ jobs:
             -   name: Test du script console.sh (faux docker compose)
                 run: bash tests/Formation/Scripts/console-test.sh
 
+            -   name: Test des cibles make qa et make test (faux docker compose)
+                run: bash tests/Formation/Scripts/make-targets-test.sh
+
             -   name: ECS
                 run: vendor/bin/ecs check src tests
 

@@ -65,7 +65,7 @@ Pour chaque étape, voici une demande type à adapter. Les réponses de l'assist
 3. **Implémenter** (agents `backend-dev` puis `test-writer`)
    « Le plan est validé. Délègue l'implémentation à `backend-dev` par petits incréments, puis les tests à `test-writer`. »
 4. **Contrôler** (agent `qa`)
-   « Lance `qa` et donne-moi le tableau de résultats. » Tout doit être vert : ECS, PHPStan niveau 9, PHPUnit.
+   « Lance `qa` et donne-moi le tableau de résultats. » Tout doit être vert : ECS, PHPStan niveau 9, PHPUnit. À la main : `make qa` (ou `make test` pour PHPUnit seul), qui lance les contrôles dans le conteneur.
 5. **Relire** (agent `reviewer`)
    Les fichiers non suivis n'apparaissent pas dans `git diff` : lancez d'abord `git add -N .` (ajout « intent-to-add »), puis donnez la sortie de `git diff` à `reviewer`. Corrigez les points bloquants et importants.
 6. **Documenter** (agent `docs-writer`)
@@ -120,7 +120,7 @@ bash scripts/formation/init-local.sh --reset
 | « Composer detected issues in your platform … PHP >= 8.3.0 » | La commande a été lancée avec le PHP du poste : passer par `scripts/formation/console.sh` |
 | `502 Bad Gateway` après un redémarrage de php | `docker compose restart nginx` |
 | nginx ou MySQL ne démarre pas | Port 80 ou 3306 déjà utilisé sur le poste |
-| ECS signale des fins de ligne sur des fichiers existants (Windows) | Limiter ECS à `src/Formation tests/Formation` |
+| ECS signale des fins de ligne sur des fichiers existants (Windows), et `make qa` s'arrête sur ECS (PHPStan et PHPUnit ne sont alors pas lancés ; `make test` reste possible) | Les fichiers sont en CRLF dans la copie de travail (`core.autocrlf`), alors qu'ils sont en LF dans Git : la CI (Linux) fait foi. Pour contrôler seulement le code de la formation : `docker compose exec -T -e XDEBUG_MODE=off php vendor/bin/ecs check src/Formation tests/Formation` |
 
 Autres cas : [Dépannage du README de la formation](README.md). Pour signaler un défaut de ce guide : modèle de ticket « Bug ».
 
@@ -139,6 +139,5 @@ Ticket : [#11](https://github.com/ifeddi/sylius-multisite-formation/issues/11), 
 
 ## 10. Ce qui n'existe pas encore
 
-- Cibles `make qa` et `make test` : ticket S1-1 (en attendant, lancer l'agent `qa`, ou `scripts/formation/qa.sh` depuis le shell du conteneur : `docker compose exec php sh`).
 - Devcontainer : ticket S1-4.
 - Validation de ce guide sur une machine vierge : ticket S1-5. Les étapes 3 à 7 de la boucle n'ont pas encore été éprouvées de bout en bout.

@@ -5,7 +5,7 @@ Cette roadmap fait évoluer les sites e-commerce du projet avec de nouvelles fon
 ## Objectifs
 
 1. **Fonctionnalités** : enrichir les quatre sites (origine et fournisseur des produits, promotions B2B et de livraison, export des commandes, alerte de stock).
-2. **Reproductibilité** : n'importe quel développeur obtient un poste opérationnel et lance les mêmes contrôles (`make qa` et devcontainer, à venir : S1-1 et S1-4).
+2. **Reproductibilité** : n'importe quel développeur obtient un poste opérationnel et lance les mêmes contrôles (`make qa` disponible, devcontainer à venir : S1-4).
 3. **Process agentique** : pratiquer la boucle explorer, plan validé, implémentation, contrôle, relecture, pull request sur des tickets réels.
 4. **Industrialisation** : worker Messenger, build du front et tests d'intégration en CI.
 

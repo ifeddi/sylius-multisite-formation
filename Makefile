@@ -1,10 +1,12 @@
-.PHONY: run console
+.PHONY: run console qa test
 
 DOCKER_COMPOSE ?= docker compose
 # Avoid using root (0:0) as DOCKER_USER, especially in WSL2 environments
 # If id -u returns 0, fall back to 1000:1000 to prevent fixuid/PHP-FPM issues
 DOCKER_USER ?= $(shell if [ "$$(id -u)" = "0" ]; then echo "1000:1000"; else echo "$$(id -u):$$(id -g)"; fi)
 ENV ?= "dev"
+# Commande exécutée dans le conteneur php : sans terminal (-T) et sans Xdebug, comme les commandes autorisées dans .claude/settings.json
+PHP_EXEC ?= $(DOCKER_COMPOSE) exec -T -e XDEBUG_MODE=off php
 
 init:
 	@make -s docker-compose-check
@@ -47,6 +49,16 @@ php-shell:
 # Console Symfony dans le conteneur PHP 8.3, même si le PHP du poste est plus ancien : make console ARGS='formation:sites:list' (ARGS entre guillemets simples)
 console:
 	@DOCKER_COMPOSE="$(DOCKER_COMPOSE)" bash scripts/formation/console.sh $(ARGS)
+
+# Contrôles qualité dans le conteneur php (mêmes commandes que scripts/formation/qa.sh et la CI) ; s'arrête au premier échec. ECS en lecture seule (check)
+qa:
+	@$(PHP_EXEC) vendor/bin/ecs check src tests
+	@$(PHP_EXEC) vendor/bin/phpstan analyse --no-progress
+	@$(PHP_EXEC) vendor/bin/phpunit tests/Formation
+
+# Tests PHPUnit de la formation dans le conteneur php
+test:
+	@$(PHP_EXEC) vendor/bin/phpunit tests/Formation
 
 node-shell:
 	@ENV=$(ENV) DOCKER_USER=$(DOCKER_USER) $(DOCKER_COMPOSE) run --rm -i nodejs sh
