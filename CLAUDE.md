@@ -25,6 +25,12 @@ Instance locale **multi-sites** (un channel par site), voir `docs/formation/READ
 `src/Formation/ModuleNN<Nom>/` : un dossier par module de la formation (voir `docs/formation/README.md`).
 Entités : `src/Entity/` (mapping Doctrine). Tests : `tests/Formation/`. Scripts : `scripts/formation/`.
 
+## Agents IA
+- Agents partagés dans `.claude/agents/` (explorer, backend-dev, test-writer, qa, reviewer, docs-writer) et permissions dans `.claude/settings.json` : voir `docs/formation/process-agentique.md`.
+- Process : explorer en lecture seule, plan validé par un humain avant tout code, petits incréments testés, contrôle qualité, relecture, pull request.
+- Les agents lancent les commandes dans le conteneur : `docker compose exec -T -e XDEBUG_MODE=off php ...` (les commandes de ce fichier sans préfixe se lancent ainsi ou dans `make php-shell`).
+- Les fichiers de `.claude/`, `.github/`, `scripts/` et le `Makefile` s'exécutent chez quiconque clone le dépôt : le propriétaire est désigné par CODEOWNERS (revue exigée si le ruleset de `main` l'impose) et les réglages partagés ne contiennent ni hooks ni serveurs MCP.
+
 ## Interdits
 - Ne pas modifier `vendor/` ni les migrations déjà appliquées.
 - Ne jamais lancer `sylius:fixtures:load` hors développement.
