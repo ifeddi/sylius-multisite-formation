@@ -3,6 +3,8 @@
 Bonnes pratiques pour le jeu de données de l'instance multi-sites, le partage entre développeurs et les
 correctifs de données en production. Les scripts cités sont dans `scripts/formation/`.
 
+Les commandes `bin/console` de ce document se lancent dans le conteneur PHP (`make php-shell`), ou depuis l'hôte avec `make console ARGS='...'`.
+
 ## 1. Quatre sortes de données, quatre façons de les gérer
 
 | Donnée | Exemples | Où elle vit | Comment elle arrive |

@@ -6,7 +6,7 @@ Instance locale **multi-sites** (un channel par site), voir `docs/formation/READ
 
 ## Environnement (Docker)
 - Démarrer : `make up` ; shell PHP : `make php-shell` (ou `docker compose exec php sh`).
-- Console : `php bin/console ...` dans le conteneur PHP (le fichier `bin/console` n'est pas exécutable sous Windows).
+- Console : toutes les commandes `php bin/console ...` de ce fichier se lancent dans le conteneur PHP, jamais avec le `php` de l'hôte (souvent 8.2) ; depuis l'hôte : `make console ARGS='...'` ou `scripts/formation/console.sh ...` (le fichier `bin/console` n'est pas exécutable sous Windows).
 - Sites locaux : `http://localhost` (HQ), `http://fr.sylius.localhost`, `http://de.sylius.localhost`, `http://us.sylius.localhost`.
 - Charger les données de développement : `php bin/console sylius:fixtures:load formation_multisite` (développement uniquement).
 

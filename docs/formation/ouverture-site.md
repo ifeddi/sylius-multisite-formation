@@ -2,6 +2,8 @@
 
 Commande : `php bin/console formation:sites:open <fichier.yaml> [--dry-run]`
 
+Les commandes `php bin/console` de ce document se lancent dans le conteneur PHP (`make php-shell`), ou depuis l'hôte avec `make console ARGS='formation:sites:open data/formation/sites/site-be.yaml --dry-run'`.
+
 Elle crée ou met à jour un **channel** Sylius à partir d'un fichier YAML, et le rattache à ses payment methods et shipping methods existantes (y compris le tarif `flat_rate` du channel). Elle est **idempotente** : la clé est le `code` du channel, une deuxième exécution ne change rien.
 
 Versions : Sylius 2.3.1, PHP 8.3. Aucune migration, aucune interface (donc pas de Twig Hook) : c'est une commande console.
