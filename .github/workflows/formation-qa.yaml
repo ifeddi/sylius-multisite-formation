@@ -48,6 +48,9 @@ jobs:
                     php bin/console lint:container
                     php bin/console list formation
 
+            -   name: Test du script console.sh (faux docker compose)
+                run: bash tests/Formation/Scripts/console-test.sh
+
             -   name: ECS
                 run: vendor/bin/ecs check src tests
 

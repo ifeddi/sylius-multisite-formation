@@ -1,4 +1,4 @@
-.PHONY: run
+.PHONY: run console
 
 DOCKER_COMPOSE ?= docker compose
 # Avoid using root (0:0) as DOCKER_USER, especially in WSL2 environments
@@ -43,6 +43,10 @@ clean:
 
 php-shell:
 	@ENV=$(ENV) DOCKER_USER=$(DOCKER_USER) $(DOCKER_COMPOSE) exec php sh
+
+# Console Symfony dans le conteneur PHP 8.3, même si le PHP du poste est plus ancien : make console ARGS='formation:sites:list' (ARGS entre guillemets simples)
+console:
+	@DOCKER_COMPOSE="$(DOCKER_COMPOSE)" bash scripts/formation/console.sh $(ARGS)
 
 node-shell:
 	@ENV=$(ENV) DOCKER_USER=$(DOCKER_USER) $(DOCKER_COMPOSE) run --rm -i nodejs sh
