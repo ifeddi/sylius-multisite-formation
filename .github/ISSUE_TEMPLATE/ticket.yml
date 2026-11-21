@@ -1,0 +1,69 @@
+name: Ticket (fonctionnalité ou tâche technique)
+description: Un ticket prêt à être simulé avec le process agentique
+title: "[Ticket] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Un ticket est **prêt** quand il a un contexte, un objectif, des critères d'acceptation testables, des pistes vérifiées dans le code (ou marquées « non vérifié »), ses dépendances et une estimation.
+        Voir la [roadmap](https://github.com/ifeddi/sylius-multisite-formation/blob/main/docs/formation/roadmap.md) et le guide [Simuler un ticket](https://github.com/ifeddi/sylius-multisite-formation/blob/main/docs/formation/simuler-un-ticket.md).
+  - type: dropdown
+    id: sprint
+    attributes:
+      label: Sprint
+      options:
+        - Sprint 1
+        - Sprint 2
+        - Backlog
+    validations:
+      required: true
+  - type: dropdown
+    id: estimation
+    attributes:
+      label: Estimation
+      options:
+        - S (demi-journée)
+        - M (1 à 2 jours)
+        - L (3 jours)
+    validations:
+      required: true
+  - type: textarea
+    id: contexte
+    attributes:
+      label: Contexte
+      description: Pourquoi ce ticket existe, ce qui existe déjà.
+    validations:
+      required: true
+  - type: textarea
+    id: objectif
+    attributes:
+      label: Objectif
+      description: Ce qui doit être livré, en une ou deux phrases.
+    validations:
+      required: true
+  - type: textarea
+    id: criteres
+    attributes:
+      label: Critères d'acceptation
+      description: Une liste de cases à cocher, chaque critère étant testable.
+      placeholder: |
+        - [ ] ...
+        - [ ] ...
+        - [ ] ...
+    validations:
+      required: true
+  - type: textarea
+    id: pistes
+    attributes:
+      label: Pistes techniques
+      description: Fichiers, services, hooks, avec les chemins réels. Écrire « non vérifié » quand ce n'est pas confirmé dans le code.
+  - type: textarea
+    id: risques
+    attributes:
+      label: Dépendances et risques
+  - type: checkboxes
+    id: proteges
+    attributes:
+      label: Fichiers protégés
+      options:
+        - label: "Ce ticket touche des fichiers protégés (`.github/`, `scripts/`, `Makefile`, `compose*.yml`, `.claude/`, `CLAUDE.md`) : chaque modification demande une validation humaine."

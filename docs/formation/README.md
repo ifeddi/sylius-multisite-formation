@@ -3,7 +3,7 @@
 Projet `sylius-standard` 2.3.1 avec une instance **multi-sites / multi-marchés** (un channel par site)
 et un module de code par cours de la formation (cours, exercice et correction du [support PowerPoint](Formation_Sylius_3_jours.pptx)).
 
-Autres documents : [données et hotfix](donnees-et-hotfix.md) · [principes SOLID](solid.md) · [ouverture d'un site](ouverture-site.md) · [architecture Docker (DAT)](architecture-docker.md) · [process agentique](process-agentique.md).
+Autres documents : [données et hotfix](donnees-et-hotfix.md) · [principes SOLID](solid.md) · [ouverture d'un site](ouverture-site.md) · [architecture Docker (DAT)](architecture-docker.md) · [process agentique](process-agentique.md) · [roadmap](roadmap.md) · [simuler un ticket](simuler-un-ticket.md).
 
 ![Architecture du projet : Docker, Sylius, code de formation, données et livraison](diagrams/architecture-projet.png)
 
