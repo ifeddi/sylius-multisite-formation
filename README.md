@@ -69,10 +69,11 @@ La boucle enseignée : cadrer, explorer en lecture seule, planifier (plan valid�
 
 ```bash
 make up                                                          # démarre PHP, Nginx, MySQL, Node
-make php-shell                                                   # shell dans le conteneur PHP
-php bin/console sylius:fixtures:load formation_multisite         # développement uniquement : vide la base
-php bin/console formation:sites:list
+make console ARGS='sylius:fixtures:load formation_multisite'     # développement uniquement : vide la base
+make console ARGS='formation:sites:list'
 ```
+
+> Les commandes `bin/console` se lancent **dans le conteneur** (PHP 8.3), avec `make console ARGS="..."`, avec `scripts/formation/console.sh ...`, ou dans `make php-shell` puis `php bin/console ...`. Depuis un terminal Windows, le `php` du poste est souvent plus ancien (XAMPP 8.2) et échoue avec « Composer detected issues in your platform ».
 
 ## Qualité et sécurité
 

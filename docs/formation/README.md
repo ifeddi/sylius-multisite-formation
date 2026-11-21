@@ -27,7 +27,8 @@ scripts/formation/init-local.sh --no-fixtures  # base migrée mais vide
 
 ```bash
 make up                       # conteneurs : php, nginx, mysql, mailhog
-make php-shell                # shell dans le conteneur PHP
+make php-shell                # shell dans le conteneur PHP : les commandes ci-dessous s'y lancent
+                              # (depuis le terminal de l'hôte : make console ARGS="<commande>")
 
 php bin/console doctrine:migrations:migrate -n
 php bin/console lexik:jwt:generate-keypair --skip-if-exists   # clés JWT de l'API (ignorées par Git)
@@ -38,7 +39,9 @@ php bin/console formation:sites:list
 
 Recharger les fixtures **efface et recrée** toutes les données (produits, clients, commandes, promotions, fournisseurs).
 
-> Sous Windows, `bin/console` n'est pas exécutable dans le conteneur : lancer `php bin/console ...`.
+> Les commandes `php bin/console ...` se lancent **dans le conteneur** (PHP 8.3) : dans `make php-shell`, ou depuis l'hôte avec `make console ARGS='formation:sites:list'` (équivalent : `scripts/formation/console.sh formation:sites:list`). Lancé directement dans un terminal Windows, `php` est celui du poste, souvent trop ancien (voir le Dépannage).
+> Sous Git Bash, le script n'ouvre pas de terminal interactif : ajouter `--no-interaction` (`-n`) aux commandes qui posent des questions, ou `CONSOLE_FORCE_TTY=1` (avec winpty). Avec `make`, mettre `ARGS` entre guillemets simples pour passer plusieurs arguments.
+> Sous Windows, `bin/console` n'est pas exécutable : toujours l'appeler par `php bin/console ...`.
 
 ### Sites locaux
 
@@ -126,15 +129,19 @@ Le parcours complet de l'API Shop est dans `scripts/formation/api-parcours.sh` (
 Le dossier du projet est monté dans Docker par un système de fichiers lent (9p). Dans `compose.override.yml`
 (fichier local, non versionné), `vendor/` et `var/` sont des **volumes Docker** (ext4) : les dépendances
 vivent donc dans le volume `vendor-data` (installées par `composer install` dans le conteneur) et non dans
-le dossier `vendor/` de Windows. Pour utiliser un IDE, lancer `composer install` aussi côté Windows ou
-configurer l'interpréteur distant Docker.
+le dossier `vendor/` de Windows. Pour utiliser un IDE, configurer l'interpréteur PHP distant Docker (service
+`php`). Un `composer install` côté Windows exige PHP 8.3 sur le poste. Avec ce `compose.override.yml`, un `vendor/`
+laissé sur Windows par un ancien `make init` est masqué dans le conteneur : seul le PHP du poste le lit.
 
 ### Dépannage
+
+Les commandes `php bin/console` de ce tableau se lancent dans le conteneur (voir plus haut).
 
 | Symptôme | Cause et solution |
 |---|---|
 | `502 Bad Gateway` après `docker compose up -d php` | nginx garde l'ancienne adresse du conteneur PHP : `docker compose restart nginx` |
-| Commandes console lentes | Xdebug est actif : `docker compose exec -e XDEBUG_MODE=off php php bin/console ...` |
+| `Composer detected issues in your platform: Your Composer dependencies require a PHP version ">= 8.3.0". You are running 8.2.x` | la commande a été lancée avec le PHP du poste (XAMPP 8.2 par exemple) au lieu du conteneur : utiliser `make console ARGS='formation:sites:list'`, `scripts/formation/console.sh formation:sites:list` ou `make php-shell` |
+| Commandes console lentes | Xdebug est actif : utiliser `make console ARGS='...'` (Xdebug coupé) ou `docker compose exec -e XDEBUG_MODE=off php php bin/console ...` |
 | `Unable to create the "cache" directory` | droits sur `var/` : le volume `var-data` doit appartenir à l'utilisateur 1000 (`docker compose exec -u root php chown -R 1000:1000 var vendor`) |
 | `make clean` vide `vendor/` | les volumes sont supprimés : relancer `docker compose exec php composer install` |
 | `An error occurred while trying to encode the JWT token` (jeton API) | clés JWT absentes : `php bin/console lexik:jwt:generate-keypair --skip-if-exists` (les régénérer avec `--overwrite` invalide tous les jetons en circulation) |

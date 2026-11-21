@@ -1,0 +1,3 @@
+# Les scripts shell gardent des fins de ligne LF, même sous Windows (core.autocrlf), sinon bash échoue sur « \r ».
+*.sh text eol=lf
+Makefile text eol=lf
