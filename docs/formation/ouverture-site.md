@@ -72,7 +72,7 @@ Pour le site exemple, la simulation annonce 14 changements ; la seconde exécuti
 
 ```bash
 vendor/bin/phpunit tests/Formation/Module14MultiSite   # 37 tests unitaires
-scripts/formation/qa.sh                                # ECS, PHPStan niveau 9, PHPUnit
+make qa                                                # ECS, PHPStan niveau 9, PHPUnit (dans le conteneur)
 ```
 
 | Fichier de test | Couvre |

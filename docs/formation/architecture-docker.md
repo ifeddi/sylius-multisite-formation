@@ -163,7 +163,7 @@ Messenger : aucun conteneur ne consomme les files. Les promotions de catalogue n
 | Après recréation du conteneur php | `docker compose restart nginx` (sinon erreur 502 : nginx garde l'ancienne adresse de php) |
 | Initialiser l'instance locale | `scripts/formation/init-local.sh` (réservé à `APP_ENV=dev`) |
 | Instantané et restauration de la base | `scripts/formation/db-dump.sh`, `scripts/formation/db-restore.sh` |
-| Contrôles qualité | `scripts/formation/qa.sh` dans le conteneur php |
+| Contrôles qualité | `make qa` (ECS, PHPStan, PHPUnit) et `make test` (PHPUnit), lancés dans le conteneur php avec Xdebug coupé ; `scripts/formation/qa.sh` pour un lancement depuis le conteneur |
 | Commandes plus rapides sans débogage | préfixer par `XDEBUG_MODE=off` |
 
 Sous Git Bash, préfixer par `MSYS_NO_PATHCONV=1` les commandes qui contiennent des chemins Linux, sinon Windows les convertit.

@@ -11,8 +11,8 @@ Instance locale **multi-sites** (un channel par site), voir `docs/formation/READ
 - Charger les données de développement : `php bin/console sylius:fixtures:load formation_multisite` (développement uniquement).
 
 ## Commandes de qualité
-- Tout contrôler : `scripts/formation/qa.sh` (ECS, PHPStan, PHPUnit).
-- Tests de la formation : `vendor/bin/phpunit tests/Formation`.
+- Tout contrôler : `make qa` (ECS, PHPStan, PHPUnit, dans le conteneur php ; équivalent de `scripts/formation/qa.sh` lancé depuis le conteneur).
+- Tests de la formation : `make test` (ou `vendor/bin/phpunit tests/Formation` dans le conteneur).
 - Migrations : `php bin/console doctrine:migrations:diff` puis `doctrine:migrations:migrate` ; relire chaque migration avant de la committer.
 
 ## Règle d'extension (dans cet ordre)

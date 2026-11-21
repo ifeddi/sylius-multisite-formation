@@ -167,9 +167,9 @@ Les commandes `php bin/console` de ce tableau se lancent dans le conteneur (voir
 | M8 | API Shop / Admin | `scripts/formation/api-parcours.sh`, `config/serialization/formation_product_origin.yaml` (champ `origin` dans l'API) |
 | M9 | Rollout | `scripts/formation/deploy.sh`, `scripts/formation/init-local.sh`, `scripts/formation/db-dump.sh`, `scripts/formation/db-restore.sh` |
 | M10 | Maintenance, montées de version et correctifs de données | `scripts/formation/upgrade-check.sh`, `docs/formation/donnees-et-hotfix.md`, commande modèle `formation:products:set-origin --dry-run` |
-| M11 | Démarrage de projet, CI | `.github/workflows/formation-qa.yaml`, `CLAUDE.md`, `scripts/formation/qa.sh` |
+| M11 | Démarrage de projet, CI | `.github/workflows/formation-qa.yaml`, `CLAUDE.md`, `Makefile` (`make qa`), `scripts/formation/qa.sh` |
 | M12 | Développer avec l'IA | `CLAUDE.md`, `.claude/agents/`, `.claude/settings.json`, `docs/formation/process-agentique.md`, `docs/formation/m12-claude-settings.example.json` (exemple pédagogique, plus court que les réglages réels) |
-| M13 | Poste et pipeline | `scripts/formation/qa.sh`, `.github/workflows/formation-qa.yaml`, `compose.override.yml` (volumes) |
+| M13 | Poste et pipeline | `Makefile` (`make qa`), `scripts/formation/qa.sh`, `.github/workflows/formation-qa.yaml`, `compose.override.yml` (volumes) |
 | M14 | Plateforme multi-sites | `config/packages/formation_m14_multisite_fixtures.yaml`, `src/Formation/Module14MultiSite/`, `docs/formation/ouverture-site.md` (commande `formation:sites:open`) |
 | M16 | Principes SOLID dans Sylius | `docs/formation/solid.md` (erreur et correction par principe, écarts de Sylius, check-list de revue) ; exemples réels dans `src/Formation/` et `tests/Formation/` |
 | M15 | Sécurité (secrets, clés, pipeline) | `scripts/formation/secrets-audit.sh`, `scripts/formation/db-anonymize.sh` + `anonymize.sql`, `.gitignore` (clé de chiffrement, dumps) |
@@ -183,8 +183,8 @@ Les commandes `php bin/console` de ce tableau se lancent dans le conteneur (voir
 ## Contrôles
 
 ```bash
-vendor/bin/phpunit tests/Formation        # tests unitaires des modules
-scripts/formation/qa.sh                   # ECS + PHPStan + PHPUnit
+make qa                                  # ECS + PHPStan + PHPUnit, dans le conteneur php
+make test                                # PHPUnit seul
 scripts/formation/secrets-audit.sh        # inventaire des secrets suivis par Git
 ```
 
