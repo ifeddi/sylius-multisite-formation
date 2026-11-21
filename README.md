@@ -63,6 +63,7 @@ La boucle enseignée : cadrer, explorer en lecture seule, planifier (plan valid�
 | Données et correctifs de données, anonymisation, dump/restauration | [`docs/formation/donnees-et-hotfix.md`](docs/formation/donnees-et-hotfix.md), `scripts/formation/` |
 | Principes SOLID appliqués à Sylius | [`docs/formation/solid.md`](docs/formation/solid.md) |
 | Consignes pour l'assistant IA du projet | [`CLAUDE.md`](CLAUDE.md) |
+| Roadmap (2 sprints), guide « Simuler un ticket » et process agentique | [`docs/formation/roadmap.md`](docs/formation/roadmap.md), [`docs/formation/simuler-un-ticket.md`](docs/formation/simuler-un-ticket.md), [`docs/formation/process-agentique.md`](docs/formation/process-agentique.md) |
 | Schémas : process de formation, architecture, développement agentique, CI/CD (PNG et SVG) | [`docs/formation/diagrams/`](docs/formation/diagrams/) |
 
 ## Démarrage rapide (développement local, Docker)

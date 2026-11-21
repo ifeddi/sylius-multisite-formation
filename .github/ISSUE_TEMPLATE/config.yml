@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Guide « Simuler un ticket »
+    url: https://github.com/ifeddi/sylius-multisite-formation/blob/main/docs/formation/simuler-un-ticket.md
+    about: Comment simuler l'implémentation d'un ticket avec le process agentique.
+  - name: Roadmap
+    url: https://github.com/ifeddi/sylius-multisite-formation/blob/main/docs/formation/roadmap.md
+    about: Les deux sprints, les tickets et leurs dépendances.
+  - name: Signaler une vulnérabilité
+    url: https://github.com/ifeddi/sylius-multisite-formation/security/advisories/new
+    about: Utiliser le signalement privé, pas une issue publique.

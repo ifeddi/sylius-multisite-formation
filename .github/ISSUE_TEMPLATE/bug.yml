@@ -1,0 +1,38 @@
+name: Bug
+description: Signaler un défaut reproductible
+title: "[Bug] "
+labels: ["bug"]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+    validations:
+      required: true
+  - type: textarea
+    id: etapes
+    attributes:
+      label: Étapes pour reproduire
+      placeholder: |
+        1. ...
+        2. ...
+    validations:
+      required: true
+  - type: textarea
+    id: observe
+    attributes:
+      label: Résultat observé
+      description: Message d'erreur complet (sans secret).
+    validations:
+      required: true
+  - type: textarea
+    id: attendu
+    attributes:
+      label: Résultat attendu
+    validations:
+      required: true
+  - type: textarea
+    id: environnement
+    attributes:
+      label: Environnement
+      description: Système, version de Docker, PHP du poste s'il est concerné, branche ou commit.
